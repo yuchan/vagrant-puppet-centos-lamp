@@ -1,0 +1,11 @@
+---
+:hierarchy:
+    - %{::data_center}
+    - common
+
+:backends:
+    - json
+
+:json:
+    :datadir: 'hieradata'
+
