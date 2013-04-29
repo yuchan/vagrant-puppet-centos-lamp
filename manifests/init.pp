@@ -38,3 +38,14 @@ class apache {
 
 class { apache: }
 class { firewall: }
+
+class { 'ntp':
+  ensure     => running,
+  servers    => [ 
+    '130.69.251.23',
+    '133.31.180.6',
+    '130.34.11.117',
+    '130.34.48.32'
+  ],
+  autoupdate => true,
+}
