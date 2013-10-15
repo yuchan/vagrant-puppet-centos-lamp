@@ -31,8 +31,8 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
-
+  config.vm.synced_folder "webapps/", "/vagrant/webapps", owner: "apache", group: "apache"
+  
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
@@ -66,14 +66,13 @@ Vagrant.configure("2") do |config|
   # #               Managed by Puppet.\n"
   # # }
   #
+  
   config.vm.provision :puppet do |puppet|
-    ## tell Puppet where to find the hiera config
-    puppet.options = "--hiera_config hiera.yaml"
     puppet.manifests_path = "manifests"
     puppet.manifest_file  = "init.pp"
-    puppet.module_path = "modules"
+    puppet.options = ["--templatedir","/vagrant/templates"]
   end
-
+  
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
