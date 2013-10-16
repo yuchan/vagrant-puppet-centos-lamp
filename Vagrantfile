@@ -11,7 +11,9 @@ Vagrant.configure("2") do |config|
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130427.box"
+  # config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130427.box"
+  config.vm.box_url = 'http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box'
+  config.vm.hostname = 'cakedev.yusuke.vm'
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -31,7 +33,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "webapps/", "/vagrant/webapps", owner: "apache", group: "apache"
+  # config.vm.synced_folder "webapps/", "/vagrant/webapps", owner: "apache", group: "apache"
   
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -68,9 +70,10 @@ Vagrant.configure("2") do |config|
   #
   
   config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "manifests"
+    puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file  = "init.pp"
-    puppet.options = ["--templatedir","/vagrant/templates"]
+	puppet.module_path = "puppet/modules"
+	puppet.options = ["--templatedir","/vagrant/templates"]
   end
   
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
